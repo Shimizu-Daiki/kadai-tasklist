@@ -8,6 +8,8 @@
     </head>
 
     <body>
+        
+        
         <header class="mb-4">
             <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
                 {{-- トップページへのリンク --}}
@@ -28,7 +30,11 @@
         </header>
 
         <div class="container">
+            {{-- エラーメッセージ --}}
+            @include('commons.error_messages')
+            
             @yield('content')
+            
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

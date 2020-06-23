@@ -8,6 +8,7 @@
     <table class="table table-bordered">
         <tr>
             <th>id</th>
+            <th>{{ $task->status }}</th>
             <td>{{ $task->id }}</td>
         </tr>
         <tr>
