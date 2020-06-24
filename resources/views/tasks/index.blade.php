@@ -31,6 +31,6 @@
     
     
     {{-- メッセージ作成ページへのリンク --}}
-    {!! link_to_route('tasks.create', '新規タスクの追加', [], ['class' => 'btn btn-primary']) !!}
+    {!! link_to_route('tasks.create', 'タスクの追加', [], ['class' => 'btn btn-primary']) !!}
     
 @endsection
