@@ -46,12 +46,16 @@ class TasksController extends Controller
     {
         // バリデーション
         $this->validate($request, [
+            
             'status' => 'required|max:10',   // 追加
             'content' => 'required|max:255',
+            
         ]);
 
         
         $task = new Task;
+        
+        $task->user_id = \Auth::id();
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
