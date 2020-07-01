@@ -15,14 +15,19 @@ class TasksController extends Controller
      */
     public function index()
     {
+        $data = [];
         if (\Auth::check()) { // 認証済みの場合
-            $tasks = Task::all();
-            return view('tasks.index', [
+        
+            $user = \Auth::user();
+            
+            $tasks = $user->tasks;
+
+            $data = [
+                'user' => $user,
                 'tasks' => $tasks,
-            ]);
-        }else{
-            return view('welcome');
+            ];
         }
+        return view('tasks.index', $data);
     }
      
     /**
@@ -103,12 +108,18 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-
-        // メッセージ編集ビューでそれを表示
-        return view('tasks.edit', [
-            'task' => $task,
-        ]);
+        
+        if (\Auth::id() === $task->user_id) {
+            // メッセージ編集ビューでそれを表示
+            return view('tasks.edit', [
+                'task' => $task,
+            ]);
+            
+        }else{
+            return redirect('/');
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -142,10 +153,14 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        // メッセージを削除
-        $task->delete();
-
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        
+        
+        if (\Auth::id() === $task->user_id) {
+            
+            $task->delete();
+            
+        }else{
+            return redirect('/');
+        }
     }
 }
